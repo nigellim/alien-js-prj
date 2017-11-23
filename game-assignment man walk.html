@@ -2,19 +2,25 @@
 //var btn1 = document.getElementById("jump");
 //btn1 = document.addEventListener("click" , manjump);
 
+
 var img;
 var myTimer = null
 var step = 0
 var counter = 0
 var jumpheight = 10;
+var isJumping = false;
 
 function manjump(){
 	console.log('hello from manjump');
      counter++
      console.log(counter);
+     isJumping = true;
+
+     
 
      if (counter == jumpheight * 2) {
      	counter = 0;
+     	isJumping = false;
 		clearInterval(jumptimer);
 		return;
      }
@@ -23,10 +29,10 @@ function manjump(){
 	} else {
 
 		img.style.top = parseInt(img.style.top) + counter - jumpheight +'px'
-
-
 	}
      
+
+
 }	
 
 
@@ -39,7 +45,10 @@ function move(){
 
 	var img = document.getElementById('x')
 	img.style.left = parseInt(img.style.left)+1+'px'
-	img.src='images/alien/alienrwalk' + step + '.gif'
+
+	if (isJumping === false) {
+		img.src='images/alien/alienrwalk' + step + '.gif'
+	}
 }
 
 onload=function(){
@@ -60,11 +69,16 @@ onload=function(){
 	}
 
 	button.onclick = function () {
-		clearInterval(myTimer);
+		//clearInterval(myTimer);
 		jumptimer = setInterval(manjump,50);
 	}
 
 }
+
+
+
+
+
 </script>
 </head>
 <body>
