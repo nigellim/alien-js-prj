@@ -1,0 +1,76 @@
+<html><head><script>
+//var btn1 = document.getElementById("jump");
+//btn1 = document.addEventListener("click" , manjump);
+
+var img;
+var myTimer = null
+var step = 0
+var counter = 0
+var jumpheight = 10;
+
+function manjump(){
+	console.log('hello from manjump');
+     counter++
+     console.log(counter);
+
+     if (counter == jumpheight * 2) {
+     	counter = 0;
+		clearInterval(jumptimer);
+		return;
+     }
+	if(counter < jumpheight) {
+		img.style.top = parseInt(img.style.top)- counter +'px'   // moves up	
+	} else {
+
+		img.style.top = parseInt(img.style.top) + counter - jumpheight +'px'
+
+
+	}
+     
+}	
+
+
+function move(){
+
+	step++
+	if(step >= 30){
+		step = 0
+	}
+
+	var img = document.getElementById('x')
+	img.style.left = parseInt(img.style.left)+1+'px'
+	img.src='images/alien/alienrwalk' + step + '.gif'
+}
+
+onload=function(){
+	button = document.getElementById('jump');
+	console.log(button);
+	img = document.getElementById('x')
+	
+	img.onclick=function(){
+		
+		if(myTimer == null){
+			// not running; let's start a timer
+			myTimer = setInterval(move, 10)
+		}else{
+			// timer is already running; let's stop it 
+			clearInterval(myTimer)
+			myTimer = null
+		}
+	}
+
+	button.onclick = function () {
+		clearInterval(myTimer);
+		jumptimer = setInterval(manjump,50);
+	}
+
+}
+</script>
+</head>
+<body>
+<button id="jump">JUMP</button>
+
+	<img src="images/alien/alienrwalk0.gif" id="x" 
+	     style="position:absolute; left:12px; top:100px">
+</body>
+</html>
