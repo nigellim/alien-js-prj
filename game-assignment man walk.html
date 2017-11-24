@@ -9,6 +9,12 @@ var step = 0
 var counter = 0
 var jumpheight = 10;
 var isJumping = false;
+var viewportWidth = window.innerWidth;
+
+
+
+
+window.addEventListener("resize", function(){document.getElementById('game').innerWidth })
 
 function manjump(){
 	console.log('hello from manjump');
@@ -31,9 +37,24 @@ function manjump(){
 		img.style.top = parseInt(img.style.top) + counter - jumpheight +'px'
 	}
      
-
-
 }	
+
+
+function moveback(){
+	
+	
+	if(step <= 30){
+		//step = 0
+		step--
+	}
+
+	var img = document.getElementById('x')
+	img.style.left = parseInt(img.style.left)-1+'px'
+
+	if (isJumping === false) {
+		img.src='images/alien/alienrwalk' + step + '.gif'
+	}
+}
 
 
 function move(){
@@ -58,15 +79,37 @@ onload=function(){
 	
 	img.onclick=function(){
 		
+		if (parseInt(img.style.left) == viewportWidth) {
+
+				if(myTimer == null){
+						// not running; let's start a timer
+						myTimer = setInterval(moveback, 10)
+					}else{
+						// timer is already running; let's stop it 
+						clearInterval(myTimer)
+						myTimer = null
+					}
+				}
+
+		 else {
+
 		if(myTimer == null){
-			// not running; let's start a timer
-			myTimer = setInterval(move, 10)
-		}else{
-			// timer is already running; let's stop it 
-			clearInterval(myTimer)
-			myTimer = null
+						// not running; let's start a timer
+						myTimer = setInterval(move, 10)
+					}else{
+						// timer is already running; let's stop it 
+						clearInterval(myTimer)
+						myTimer = null
+					}
+				}
+
+
 		}
-	}
+
+
+
+
+	
 
 	button.onclick = function () {
 		//clearInterval(myTimer);
@@ -81,7 +124,7 @@ onload=function(){
 
 </script>
 </head>
-<body>
+<body id="game">
 <button id="jump">JUMP</button>
 
 	<img src="images/alien/alienrwalk0.gif" id="x" 
