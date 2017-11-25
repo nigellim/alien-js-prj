@@ -3,26 +3,39 @@
 //btn1 = document.addEventListener("click" , manjump);
 
 
-var img;
-var myTimer = null
-var step = 0
-var counter = 0
-var jumpheight = 10;
-var isJumping = false;
-var viewportWidth = window.innerWidth;
+var img;                    //the alien image
+var myTimer = null			//timer
+var step = 0				//step #
+var counter = 0				//counter
+var jumpheight = 10;		//jump height in px
+var isJumping = false;		//is alien jumping ? T/F
+var goRight = true;			//is alien going right?  T/F
+var width = 0;				//width of viewport
+var height = 0;				//height of viewport
+var pos = 0;				//img.style.pos of our alien friend
+var movingLeft = false;		//is alien going left?  T/F
+var movingRight = true;		//is alien going right?  T/F
 
+// Get the dimensions of the viewport
+function jsUpdateSize(){
+    
+    width = window.innerWidth ||
+                document.documentElement.clientWidth ||
+                document.body.clientWidth;
+    height = window.innerHeight ||
+                 document.documentElement.clientHeight ||
+                 document.body.clientHeight;
+    
+};
 
+//window.addEventListener("resize", function(){document.getElementById('game').innerWidth })
 
-
-window.addEventListener("resize", function(){document.getElementById('game').innerWidth })
-
+// function that makes alien jump
 function manjump(){
-	console.log('hello from manjump');
+	 //console.log('hello from manjump');
      counter++
-     console.log(counter);
-     isJumping = true;
-
-     
+     //console.log(counter);
+     isJumping = true;   
 
      if (counter == jumpheight * 2) {
      	counter = 0;
@@ -39,86 +52,90 @@ function manjump(){
      
 }	
 
-
-function moveback(){
-	
-	
-	if(step <= 30){
-		//step = 0
-		step--
-	}
-
-	var img = document.getElementById('x')
-	img.style.left = parseInt(img.style.left)-1+'px'
-
-	if (isJumping === false) {
-		img.src='images/alien/alienrwalk' + step + '.gif'
-	}
+// function to check the position of alien buddy (img.style.left)
+function checkpos(){
+		pos = parseInt(img.style.left);	
 }
 
 
+//function that moves the alien
 function move(){
 
 	step++
 	if(step >= 30){
 		step = 0
-	}
 
-	var img = document.getElementById('x')
-	img.style.left = parseInt(img.style.left)+1+'px'
-
-	if (isJumping === false) {
-		img.src='images/alien/alienrwalk' + step + '.gif'
 	}
+	checkpos();
+
+	// If Alien is moving right
+
+	if ( movingRight == true) {
+
+			//var img = document.getElementById('x')
+			img.style.left = parseInt(img.style.left)+1+'px'
+
+			if (isJumping === false) {
+				img.src='images/alien/alienrwalk' + step + '.gif'
+			}
+
+			if(pos >= width){
+				movingRight = false;
+				movingLeft = true;
+			}
+
+
+
+	}
+	// If Alien is moving left
+	if(movingLeft == true){
+		///var img = document.getElementById('x')
+			img.style.left = parseInt(img.style.left)-1+'px'
+
+		if (isJumping === false) {
+			img.src='images/alien/alienlwalk' + step + '.gif'
+		}
+
+		if(pos <= 0){
+				movingRight = true;
+				movingLeft = false;
+			}
+
+	} 
+
+
 }
 
 onload=function(){
-	button = document.getElementById('jump');
-	console.log(button);
+	button = document.getElementById('jump');		// get button
+	//console.log(button);	
 	img = document.getElementById('x')
-	
-	img.onclick=function(){
+
+    jsUpdateSize();									//get the dimenstion of viewport
+    
 		
-		if (parseInt(img.style.left) == viewportWidth) {
 
-				if(myTimer == null){
-						// not running; let's start a timer
-						myTimer = setInterval(moveback, 10)
-					}else{
-						// timer is already running; let's stop it 
-						clearInterval(myTimer)
-						myTimer = null
-					}
-				}
-
-		 else {
+	img.onclick=function(){
+	//	console.log(width);
 
 		if(myTimer == null){
-						// not running; let's start a timer
-						myTimer = setInterval(move, 10)
-					}else{
-						// timer is already running; let's stop it 
-						clearInterval(myTimer)
-						myTimer = null
-					}
-				}
+			// not running; let's start a timer
+			myTimer = setInterval(move, 10)
+							
 
-
+		}else{
+			// timer is already running; let's stop it 
+			clearInterval(myTimer)
+			myTimer = null
 		}
+	}
 
-
-
-
-	
-
+	// invoke jump function when JUMP button is clicked
 	button.onclick = function () {
 		//clearInterval(myTimer);
 		jumptimer = setInterval(manjump,50);
 	}
-
 }
-
-
 
 
 
