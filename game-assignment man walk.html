@@ -16,6 +16,10 @@ var pos = 0;				//img.style.pos of our alien friend
 var movingLeft = false;		//is alien going left?  T/F
 var movingRight = true;		//is alien going right?  T/F
 
+// detect when screen is resize screen size
+
+//  	window.addEventListener('resize', move);
+
 // Get the dimensions of the viewport
 function jsUpdateSize(){
     
@@ -60,7 +64,7 @@ function checkpos(){
 
 //function that moves the alien
 function move(){
-
+    jsUpdateSize();
 	step++
 	if(step >= 30){
 		step = 0
@@ -79,7 +83,7 @@ function move(){
 				img.src='images/alien/alienrwalk' + step + '.gif'
 			}
 
-			if(pos >= width){
+			if(pos >= width - 48){
 				movingRight = false;
 				movingLeft = true;
 			}
@@ -96,7 +100,7 @@ function move(){
 			img.src='images/alien/alienlwalk' + step + '.gif'
 		}
 
-		if(pos <= 0){
+		if(pos <= 0  ){
 				movingRight = true;
 				movingLeft = false;
 			}
@@ -111,7 +115,7 @@ onload=function(){
 	//console.log(button);	
 	img = document.getElementById('x')
 
-    jsUpdateSize();									//get the dimenstion of viewport
+    // jsUpdateSize();  //get the dimenstion of viewport
     
 		
 
