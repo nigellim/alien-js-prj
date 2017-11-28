@@ -18,23 +18,23 @@ var movingRight = true;		//is alien going right?  T/F
 
 // detect when screen is resize screen size
 
-//  	window.addEventListener('resize', move);
 
 // Get the dimensions of the viewport
+// returns the value of width and height of the viewport
 function jsUpdateSize(){
     
     width = window.innerWidth ||
                 document.documentElement.clientWidth ||
-                document.body.clientWidth;
+                document.body.clientWidth
     height = window.innerHeight ||
                  document.documentElement.clientHeight ||
-                 document.body.clientHeight;
+                 document.body.clientHeight
     
 };
 
-//window.addEventListener("resize", function(){document.getElementById('game').innerWidth })
 
 // function that makes alien jump
+
 function manjump(){
 	 //console.log('hello from manjump');
      counter++
@@ -42,13 +42,13 @@ function manjump(){
      isJumping = true;   
 
      if (counter == jumpheight * 2) {
-     	counter = 0;
-     	isJumping = false;
-		clearInterval(jumptimer);
+     	counter = 0
+     	isJumping = false
+		clearInterval(jumptimer)
 		return;
      }
 	if(counter < jumpheight) {
-		img.style.top = parseInt(img.style.top)- counter +'px'   // moves up	
+		img.style.top = parseInt(img.style.top)- counter +'px'  // moves up	
 	} else {
 
 		img.style.top = parseInt(img.style.top) + counter - jumpheight +'px'
@@ -58,21 +58,23 @@ function manjump(){
 
 // function to check the position of alien buddy (img.style.left)
 function checkpos(){
-		pos = parseInt(img.style.left);	
+		pos = parseInt(img.style.left)
 }
 
 
 //function that moves the alien
 function move(){
-    jsUpdateSize();
+
+    jsUpdateSize() // check & return size of viewport
+
 	step++
 	if(step >= 30){
 		step = 0
 
 	}
-	checkpos();
+	checkpos(); // check the position of our friend
 
-	// If Alien is moving right
+	// If Alien is moving right ? if so keep moving right
 
 	if ( movingRight == true) {
 
@@ -84,14 +86,16 @@ function move(){
 			}
 
 			if(pos >= width - 48){
-				movingRight = false;
-				movingLeft = true;
+				movingRight = false
+				movingLeft = true
 			}
 
 
 
 	}
-	// If Alien is moving left
+
+	// If Alien is moving left then keep moving left
+
 	if(movingLeft == true){
 		///var img = document.getElementById('x')
 			img.style.left = parseInt(img.style.left)-1+'px'
@@ -101,8 +105,8 @@ function move(){
 		}
 
 		if(pos <= 0  ){
-				movingRight = true;
-				movingLeft = false;
+				movingRight = true
+				movingLeft = false
 			}
 
 	} 
@@ -111,13 +115,9 @@ function move(){
 }
 
 onload=function(){
-	button = document.getElementById('jump');		// get button
+	button = document.getElementById('jump')		// get button
 	//console.log(button);	
 	img = document.getElementById('x')
-
-    // jsUpdateSize();  //get the dimenstion of viewport
-    
-		
 
 	img.onclick=function(){
 	//	console.log(width);
@@ -137,7 +137,7 @@ onload=function(){
 	// invoke jump function when JUMP button is clicked
 	button.onclick = function () {
 		//clearInterval(myTimer);
-		jumptimer = setInterval(manjump,50);
+		jumptimer = setInterval(manjump,50)
 	}
 }
 
